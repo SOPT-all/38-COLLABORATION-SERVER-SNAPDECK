@@ -25,11 +25,9 @@ src/main/resources/application-*.yml
 *.rar
 
 # Docker
-.env.test
+.env
 .env.*
 docker-compose.override.yml
-
-application.yml
 
 # virtual machine crash logs
 hs_err_pid*
