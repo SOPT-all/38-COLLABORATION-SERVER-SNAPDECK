@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Slides", description = "Slides 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/slides")
+@RequestMapping("/api/v1")
 public class SlideController {
     private final SlideService slideService;
 }
