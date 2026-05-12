@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 public enum SampleSlideSuccessCode implements BaseCode {
     SAMPLE_SLIDES_FOUND(HttpStatus.OK, "샘플 슬라이드 조회 완료");
 
-    private HttpStatus status;
-    private String message;
+    private final HttpStatus status;
+    private final String message;
 
     SampleSlideSuccessCode(HttpStatus status, String message) {
         this.status = status;
