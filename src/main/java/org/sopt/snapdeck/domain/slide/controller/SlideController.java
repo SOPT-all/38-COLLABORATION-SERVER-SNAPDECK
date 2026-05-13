@@ -1,6 +1,7 @@
 package org.sopt.snapdeck.domain.slide.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.snapdeck.domain.slide.code.SlideSuccessCode;
@@ -26,7 +27,9 @@ public class SlideController {
     )
     @PatchMapping("/slides/{slideId}/order")
     public ResponseEntity<SuccessResponse<List<SlideResponse>>>  updateSlideOrder(
+            @Parameter(description = "순서를 변경할 슬라이드 id", example = "1")
             @PathVariable Long slideId,
+
             @RequestBody SlideOrderUpdateRequest request
     ) {
         List<SlideResponse> response = slideService.updateSlideOrder(slideId, request.toOrder());
