@@ -22,7 +22,6 @@ public class SampleSlideController {
     private final SampleSlideService sampleSlideService;
 
     @Operation(summary = "샘플 슬라이드 전체 조회", description = "샘플 슬라이드를 전체 조회합니다.")
-    @Transactional(readOnly = true)
     @GetMapping
     public ResponseEntity<SuccessResponse<List<SampleSlideResponse>>> getSampleSlides(){
         List<SampleSlideResponse> response = sampleSlideService.getSampleSlides();
