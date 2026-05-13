@@ -1,4 +1,4 @@
-package org.sopt.snapdeck.domain.test.code;
+package org.sopt.snapdeck.domain.chat.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum HealthSuccessCode implements BaseCode {
-    HEALTH_SUCCESS(HttpStatus.OK, "헬스 체크 완료.");
+public enum ChatSuccessCode implements BaseCode {
+    CHATS_FOUND(HttpStatus.OK, "채팅 목록 조회 완료");
 
     private final HttpStatus status;
     private final String message;

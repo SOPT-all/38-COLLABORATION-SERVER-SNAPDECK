@@ -1,4 +1,4 @@
-package org.sopt.snapdeck.domain.test.code;
+package org.sopt.snapdeck.domain.deck.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum HealthSuccessCode implements BaseCode {
-    HEALTH_SUCCESS(HttpStatus.OK, "헬스 체크 완료.");
+public enum DeckSuccessCode implements BaseCode {
+    DECK_FOUND(HttpStatus.OK, "덱 조회 완료");
 
     private final HttpStatus status;
     private final String message;

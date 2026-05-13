@@ -1,9 +1,11 @@
 package org.sopt.snapdeck.global.common.code;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Getter
+@RequiredArgsConstructor
 public enum GlobalErrorCode implements BaseCode {
     // 400대 - 클라이언트 에러
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
@@ -25,10 +27,6 @@ public enum GlobalErrorCode implements BaseCode {
     private final HttpStatus status;
     private final String message;
 
-    GlobalErrorCode(HttpStatus status, String message) {
-        this.status = status;
-        this.message = message;
-    }
     @Override
     public String getCode() { return name(); }
 }

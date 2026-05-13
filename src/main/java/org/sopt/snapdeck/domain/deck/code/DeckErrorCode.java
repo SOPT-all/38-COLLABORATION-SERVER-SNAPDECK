@@ -1,4 +1,4 @@
-package org.sopt.snapdeck.domain.test.code;
+package org.sopt.snapdeck.domain.deck.code;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum HealthSuccessCode implements BaseCode {
-    HEALTH_SUCCESS(HttpStatus.OK, "헬스 체크 완료.");
+public enum DeckErrorCode implements BaseCode {
+    DECK_NOT_FOUND(HttpStatus.NOT_FOUND, "deckId에 해당하는 슬라이드 덱을 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String message;
