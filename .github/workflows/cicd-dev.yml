@@ -109,11 +109,11 @@ jobs:
               exit 1
             fi
 
-            # 사용하지 않는 모든 이미지, 컨테이너, 네트워크 삭제
-            docker system prune -af  
+            # dangling 이미지만 정리 (nginx, certbot 이미지 보존)
+            docker image prune -f
 
-            # 2️⃣ 기존 컨테이너 및 네트워크 정리 (prod에서는  -v --remove-orphans에서 -v 삭제)
-            docker compose -f docker-compose.dev.yml --env-file .env.dev down -v --remove-orphans
+            # 2️⃣ 기존 컨테이너 및 네트워크 정리 
+            docker compose -f docker-compose.dev.yml --env-file .env.dev down --remove-orphans
 
             # 3️⃣ 최신 이미지 풀링
             docker compose -f docker-compose.dev.yml --env-file .env.dev pull
