@@ -6,9 +6,9 @@ services:
     container_name: snapdeck-dev-app
     env_file:
       - .env.dev
-    restart: "no"
+    restart: "unless-stopped"
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     environment:
       # application.yml 적용 후 application-dev.yml 적용.
       SPRING_PROFILES_ACTIVE: dev
