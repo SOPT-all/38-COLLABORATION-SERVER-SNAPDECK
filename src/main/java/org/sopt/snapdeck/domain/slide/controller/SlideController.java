@@ -2,6 +2,8 @@ package org.sopt.snapdeck.domain.slide.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.snapdeck.domain.slide.code.SlideSuccessCode;
@@ -36,6 +38,27 @@ public class SlideController {
 
         return ResponseEntity.ok(
                 SuccessResponse.of(SlideSuccessCode.SLIDE_ORDER_CHANGED, response)
+        );
+    }
+
+    @Operation(
+            summary = "슬라이드 삭제",
+            description = "slideId에 해당하는 슬라이드를 삭제합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "삭제 성공"),
+            @ApiResponse(responseCode = "404", description = "슬라이드를 찾을 수 없음 — 존재하지 않는 slideId로 요청한 경우")
+    })
+    @DeleteMapping("/slides/{slideId}")
+    public ResponseEntity<SuccessResponse> deleteSlide(
+            @Parameter(description = "삭제할 슬라이드 id", example = "3")
+            @PathVariable Long slideId
+    ) {
+
+        slideService.deleteSlide(slideId);
+
+        return ResponseEntity.ok(
+                SuccessResponse.of(SlideSuccessCode.SLIDE_DELETED)
         );
     }
 }
