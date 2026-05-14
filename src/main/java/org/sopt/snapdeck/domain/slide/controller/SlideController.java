@@ -27,6 +27,11 @@ public class SlideController {
             summary = "슬라이드 순서 변경",
             description = "슬라이드의 순서를 변경합니다."
     )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "순서 변경 성공"),
+            @ApiResponse(responseCode = "400", description = "슬라이드 변경 실패 - 같은 덱 슬라이드의 범위를 벗어난 순서 변경을 요청한 경우"),
+            @ApiResponse(responseCode = "404", description = "슬라이드를 찾을 수 없음 — 존재하지 않는 slideId로 요청한 경우")
+    })
     @PatchMapping("/slides/{slideId}/order")
     public ResponseEntity<SuccessResponse<List<SlideResponse>>>  updateSlideOrder(
             @Parameter(description = "순서를 변경할 슬라이드 id", example = "1")
@@ -50,7 +55,7 @@ public class SlideController {
             @ApiResponse(responseCode = "404", description = "슬라이드를 찾을 수 없음 — 존재하지 않는 slideId로 요청한 경우")
     })
     @DeleteMapping("/slides/{slideId}")
-    public ResponseEntity<SuccessResponse> deleteSlide(
+    public ResponseEntity<SuccessResponse<Void>> deleteSlide(
             @Parameter(description = "삭제할 슬라이드 id", example = "3")
             @PathVariable Long slideId
     ) {
