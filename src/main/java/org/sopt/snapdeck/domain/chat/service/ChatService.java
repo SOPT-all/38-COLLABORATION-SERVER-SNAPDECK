@@ -24,7 +24,7 @@ public class ChatService {
 
         return chatRepository.findAllByDeckIdOrderByOrderAsc(deckId)
                 .stream()
-                .map(ChatResponse::from)
+                .map(chat -> ChatResponse.from(chat, deckId))
                 .toList();
     }
 }

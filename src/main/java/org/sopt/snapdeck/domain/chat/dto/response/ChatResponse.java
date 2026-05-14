@@ -13,10 +13,10 @@ public record ChatResponse(
         String message,
         LocalDateTime createdAt
 ) {
-    public static ChatResponse from(Chat chat){
+    public static ChatResponse from(Chat chat, Long deckId){
         return new ChatResponse(
                 chat.getId(),
-                chat.getDeck().getId(),
+                deckId,
                 chat.getOrder(),
                 chat.getRole(),
                 chat.getMessage(),
