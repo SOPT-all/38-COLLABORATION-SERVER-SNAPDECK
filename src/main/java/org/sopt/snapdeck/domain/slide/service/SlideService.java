@@ -55,6 +55,21 @@ public class SlideService {
                 .toList();
     }
 
+    @Transactional
+    public void deleteSlide(Long slideId) {
+
+        Slide slide = slideRepository.findById(slideId)
+                .orElseThrow(() -> new CustomException(SlideErrorCode.SLIDE_NOT_FOUND));
+
+        Long deckId = slide.getDeck().getId();
+        int deletedOrder = slide.getOrder();
+
+        slideRepository.delete(slide);
+
+        slideRepository.decreaseOrders(deckId, deletedOrder);
+
+    }
+
     // toOrder 검증 메소드
     private void validateToOrder(int toOrder, int slideCount) {
         if (toOrder < 1 || toOrder > slideCount) {
