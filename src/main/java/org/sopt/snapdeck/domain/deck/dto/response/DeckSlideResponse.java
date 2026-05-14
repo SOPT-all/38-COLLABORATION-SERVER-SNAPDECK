@@ -1,6 +1,5 @@
 package org.sopt.snapdeck.domain.deck.dto.response;
 
-import org.sopt.snapdeck.domain.deck.entity.Deck;
 import org.sopt.snapdeck.domain.slide.entity.Slide;
 
 import java.time.LocalDateTime;
@@ -15,10 +14,10 @@ public record DeckSlideResponse(
         String footer,
         LocalDateTime createdAt,
         LocalDateTime updatedAt) {
-    public static DeckSlideResponse from(Slide slide) {
+    public static DeckSlideResponse from(Slide slide, Long deckId) {
         return new DeckSlideResponse(
                 slide.getId(),
-                slide.getDeck().getId(),
+                deckId,
                 slide.getOrder(),
                 slide.getImageName(),
                 slide.getTitle(),
