@@ -54,4 +54,14 @@ public interface SlideRepository extends JpaRepository<Slide, Long> {
         """)
     int updateTargetOrder(Long slideId, int toOrder);
 
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("""
+    update Slide s
+    set s.order = s.order - 1
+    where s.deck.id = :deckId
+      and s.order > :deletedOrder
+""")
+    int decreaseOrders(Long deckId, int deletedOrder);
+
 }
