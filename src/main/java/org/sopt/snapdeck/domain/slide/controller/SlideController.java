@@ -2,6 +2,8 @@ package org.sopt.snapdeck.domain.slide.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.sopt.snapdeck.domain.slide.code.SlideSuccessCode;
@@ -36,6 +38,27 @@ public class SlideController {
 
         return ResponseEntity.ok(
                 SuccessResponse.of(SlideSuccessCode.SLIDE_ORDER_CHANGED, response)
+        );
+    }
+
+    @Operation(
+            summary = "슬라이드 추가",
+            description = "deckId에 해당하는 슬라이드 덱에 슬라이드를 추가합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "술라이드 추가 성공"),
+            @ApiResponse(responseCode = "403", description = "슬라이드 추가 범위 초과 - 더미데이터의 슬라이드 수를 초과해서 추가하는 경우"),
+            @ApiResponse(responseCode = "404", description = "슬라이드 덱을 찾을 수 없음 — 존재하지 않는 deckId로 요청한 경우")
+    })
+    @PostMapping("/decks/{deckId}/slides")
+    public ResponseEntity<SuccessResponse<List<SlideResponse>>> addSlide(
+            @Parameter(description = "슬라이드를 추가할 슬라이드 덱 id", example = "1")
+            @PathVariable Long deckId
+    ) {
+        List<SlideResponse> response = slideService.addSlideToDeck(deckId);
+
+        return ResponseEntity.ok(
+                SuccessResponse.of(SlideSuccessCode.SLIDE_ADD_SUCCESS, response)
         );
     }
 }
