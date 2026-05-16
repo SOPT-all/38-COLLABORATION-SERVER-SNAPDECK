@@ -15,10 +15,10 @@ public record SlideResponse(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
-    public static SlideResponse from(Slide slide) {
+    public static SlideResponse from(Slide slide, Long deckId) {
         return new SlideResponse(
                 slide.getId(),
-                slide.getDeck().getId(),
+                deckId,
                 slide.getOrder(),
                 slide.getImageName(),
                 slide.getTitle(),
