@@ -1,6 +1,7 @@
 package org.sopt.snapdeck.domain.slide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.snapdeck.domain.deck.repository.DeckRepository;
 import org.sopt.snapdeck.domain.slide.code.SlideErrorCode;
 import org.sopt.snapdeck.domain.slide.dto.response.SlideResponse;
 import org.sopt.snapdeck.domain.slide.entity.Slide;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SlideService {
     private final SlideRepository slideRepository;
+    private final DeckRepository deckRepository;
 
     @Transactional
     public List<SlideResponse> updateSlideOrder(Long slideId, int toOrder) {
@@ -66,6 +68,7 @@ public class SlideService {
 
         slideRepository.delete(slide);
 
+        deckRepository.decreaseVisibleCount(deckId);
         slideRepository.decreaseOrders(deckId, deletedOrder);
 
     }
