@@ -1,11 +1,15 @@
 package org.sopt.snapdeck.domain.slide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.snapdeck.domain.deck.code.DeckErrorCode;
+import org.sopt.snapdeck.domain.deck.entity.Deck;
+import org.sopt.snapdeck.domain.deck.repository.DeckRepository;
 import org.sopt.snapdeck.domain.slide.code.SlideErrorCode;
 import org.sopt.snapdeck.domain.slide.dto.response.SlideResponse;
 import org.sopt.snapdeck.domain.slide.entity.Slide;
 import org.sopt.snapdeck.domain.slide.repository.SlideRepository;
 import org.sopt.snapdeck.global.exception.CustomException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SlideService {
     private final SlideRepository slideRepository;
+    private final DeckRepository deckRepository;
 
     @Transactional
     public List<SlideResponse> updateSlideOrder(Long slideId, int toOrder) {
@@ -33,7 +38,7 @@ public class SlideService {
         if (fromOrder == toOrder) {
             return slideRepository.findAllByDeckIdOrderByOrderAsc(deckId)
                     .stream()
-                    .map(SlideResponse::from)
+                    .map(slide -> SlideResponse.from(slide, deckId))
                     .toList();
         }
 
@@ -51,7 +56,7 @@ public class SlideService {
         // 순서 변경 후 최신 슬라이드들을 order 순으로 리턴
         return slideRepository.findAllByDeckIdOrderByOrderAsc(deckId)
                 .stream()
-                .map(SlideResponse::from)
+                .map(slide -> SlideResponse.from(slide, deckId))
                 .toList();
     }
 
@@ -62,4 +67,22 @@ public class SlideService {
         }
     }
 
+    @Transactional
+    public List<SlideResponse> addSlideToDeck(Long deckId){
+        Deck deck = deckRepository.findById(deckId)
+                .orElseThrow(() -> new CustomException(DeckErrorCode.DECK_NOT_FOUND));
+
+        if (deck.getVisibleCount() >= slideRepository.countByDeckId(deckId))
+            throw new CustomException(SlideErrorCode.NO_MORE_SLIDES_TO_REVEAL);
+
+        deck.increaseVisibleCount();
+
+        List<Slide> slides = slideRepository.findAllByDeckIdOrderByOrderAsc(
+                deckId, PageRequest.of(0, deck.getVisibleCount() ));
+
+        return slides
+                .stream()
+                .map(slide -> SlideResponse.from(slide, deckId))
+                .toList();
+    }
 }
