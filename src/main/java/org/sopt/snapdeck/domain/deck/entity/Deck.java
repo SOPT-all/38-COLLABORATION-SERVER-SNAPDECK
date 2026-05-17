@@ -17,4 +17,8 @@ public class Deck extends BaseTimeEntity {
 
     @Column(name = "visible_count", nullable = false)
     private int visibleCount;
+
+    public void increaseVisibleCount(){
+        this.visibleCount++;
+    }
 }

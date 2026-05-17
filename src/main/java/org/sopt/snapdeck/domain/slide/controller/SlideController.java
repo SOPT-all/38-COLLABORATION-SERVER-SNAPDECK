@@ -19,7 +19,7 @@ import java.util.List;
 @Tag(name = "Slides", description = "Slides 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/slides")
+@RequestMapping("/api/v1")
 public class SlideController {
     private final SlideService slideService;
 
@@ -32,7 +32,7 @@ public class SlideController {
             @ApiResponse(responseCode = "400", description = "슬라이드 변경 실패 - 같은 덱 슬라이드의 범위를 벗어난 순서 변경을 요청한 경우"),
             @ApiResponse(responseCode = "404", description = "슬라이드를 찾을 수 없음 — 존재하지 않는 slideId로 요청한 경우")
     })
-    @PatchMapping("/{slideId}/order")
+    @PatchMapping("slides/{slideId}/order")
     public ResponseEntity<SuccessResponse<List<SlideResponse>>>  updateSlideOrder(
             @Parameter(description = "순서를 변경할 슬라이드 id", example = "1")
             @PathVariable Long slideId,
@@ -47,6 +47,25 @@ public class SlideController {
     }
 
     @Operation(
+            summary = "슬라이드 추가",
+            description = "deckId에 해당하는 슬라이드 덱에 슬라이드를 추가합니다."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "술라이드 추가 성공"),
+            @ApiResponse(responseCode = "403", description = "슬라이드 추가 범위 초과 - 더미데이터의 슬라이드 수를 초과해서 추가하는 경우"),
+            @ApiResponse(responseCode = "404", description = "슬라이드 덱을 찾을 수 없음 — 존재하지 않는 deckId로 요청한 경우")
+    })
+    @PostMapping("/decks/{deckId}/slides")
+    public ResponseEntity<SuccessResponse<List<SlideResponse>>> addSlide(
+            @Parameter(description = "슬라이드를 추가할 슬라이드 덱 id", example = "1")
+            @PathVariable Long deckId
+    ) {
+        List<SlideResponse> response = slideService.addSlideToDeck(deckId);
+
+        return ResponseEntity.ok(
+                SuccessResponse.of(SlideSuccessCode.SLIDE_ADD_SUCCESS, response));
+    }
+    @Operation(
             summary = "슬라이드 삭제",
             description = "slideId에 해당하는 슬라이드를 삭제합니다."
     )
@@ -54,7 +73,7 @@ public class SlideController {
             @ApiResponse(responseCode = "200", description = "삭제 성공"),
             @ApiResponse(responseCode = "404", description = "슬라이드를 찾을 수 없음 — 존재하지 않는 slideId로 요청한 경우")
     })
-    @DeleteMapping("/{slideId}")
+    @DeleteMapping("slides/{slideId}")
     public ResponseEntity<SuccessResponse<Void>> deleteSlide(
             @Parameter(description = "삭제할 슬라이드 id", example = "3")
             @PathVariable Long slideId
