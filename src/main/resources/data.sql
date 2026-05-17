@@ -5,6 +5,15 @@
 
 SET NAMES utf8mb4;
 
+SET FOREIGN_KEY_CHECKS = 0;
+
+DELETE FROM chats;
+DELETE FROM slides;
+DELETE FROM decks;
+DELETE FROM sample_slides;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- ----- sample_slides -----
 INSERT INTO `sample_slides` (`id`, `image_name`, `title`, `slide_count`, `created_at`, `updated_at`) VALUES (1, 'img_explore1', 'Claude cop', 1, '2026-05-06 09:00:00', '2026-05-06 09:00:00');
 INSERT INTO `sample_slides` (`id`, `image_name`, `title`, `slide_count`, `created_at`, `updated_at`) VALUES (2, 'img_explore2', 'Claude Copilot vs GPT in Agent Market', 1, '2026-05-06 10:00:00', '2026-05-06 10:00:00');
