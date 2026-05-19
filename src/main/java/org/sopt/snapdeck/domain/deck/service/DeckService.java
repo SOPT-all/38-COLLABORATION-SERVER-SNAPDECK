@@ -25,6 +25,9 @@ public class DeckService {
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new CustomException(DeckErrorCode.DECK_NOT_FOUND));
 
+        if (deck.getVisibleCount() == 0)
+            return List.of();
+
         List<Slide> slides = slideRepository.findAllByDeckIdOrderByOrderAsc(
                 deckId, PageRequest.of(0, deck.getVisibleCount()));
 

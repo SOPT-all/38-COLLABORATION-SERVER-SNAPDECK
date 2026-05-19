@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum DeckSuccessCode implements BaseCode {
-    DECK_FOUND(HttpStatus.OK, "덱 조회 완료");
+    DECK_FOUND(HttpStatus.OK, "덱 조회 완료"),
+    DECK_FOUND_SLIDES_EMPTY(HttpStatus.OK, "덱 조회 완료 (노출 가능한 슬라이드 없음)");
 
     private final HttpStatus status;
     private final String message;

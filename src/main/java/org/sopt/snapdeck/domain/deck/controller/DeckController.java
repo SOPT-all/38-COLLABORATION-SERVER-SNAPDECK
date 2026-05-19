@@ -39,8 +39,10 @@ public class DeckController {
             @PathVariable Long deckId) {
         List<DeckSlideResponse> responses =  deckService.getDeckSlides(deckId);
 
-        return ResponseEntity.ok(
-                SuccessResponse.of(DeckSuccessCode.DECK_FOUND, responses)
-        );
+        DeckSuccessCode code = responses.isEmpty()
+                ? DeckSuccessCode.DECK_FOUND_SLIDES_EMPTY
+                : DeckSuccessCode.DECK_FOUND;
+
+        return ResponseEntity.ok(SuccessResponse.of(code, responses));
     }
 }
