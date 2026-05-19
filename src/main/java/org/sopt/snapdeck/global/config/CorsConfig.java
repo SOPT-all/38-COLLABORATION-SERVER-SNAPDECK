@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer{
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://localhost:5173",
-                        "https://fe-domain.p-e.kr"
+                        "https://38-collaboration-web-snapdeck.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("Authorization", "Content-Type", "Cache-Control")
