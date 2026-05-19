@@ -7,9 +7,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum HealthSuccessCode implements BaseCode {
-    HEALTH_SUCCESS(HttpStatus.OK, "헬스 체크 완료."),
-    DATA_INIT_SUCCESS(HttpStatus.OK, "데이터베이스 데이터 초기화 완료.");
+public enum HealthErrorCode implements BaseCode {
+    DATA_INIT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스 데이터 초기화 작업 중 서버 에러 발생.");
 
     private final HttpStatus status;
     private final String message;
